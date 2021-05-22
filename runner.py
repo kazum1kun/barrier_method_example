@@ -9,7 +9,7 @@ eps = 0.0001
 
 def main():
     # q1()   # Simple quadratic w/ ineqs
-    # q2()   # Bad LP?
+    # q2()   # x1 decreases without bound
     # q3()   # Simple LP w/ ineqs
     q4()   # Quadractic w/ 2 vars and ineqs
     # q5()   # Weighted sum of log functions
@@ -22,7 +22,7 @@ def main():
 def q1():
     objective = 'x**2 + 1'
     constraints = ['2 - x', 'x - 4']
-    starting_points = [3, 3.5, 2.1]
+    starting_points = [[3], [3.5], [2.1]]
 
     problem = BarrierOptimization(objective, constraints)
     problem.optimize(starting_points, alpha, beta, mu, t, eps)
@@ -62,9 +62,9 @@ def q3():
 def q4():
     objective = 'x1 ** 4 - 10*x1**2 + 5*x2**2 + x3**2  + x1 + x2 - x3'
     constraints = ['x1 - 5', '3 - x2', '-x3']
-    starting_points = [[4, 4, 1], [1, 6, 3], [4, 5, 10]]
+    starting_points = [[10, 4, 1], [1, 6, 3], [4, 5, 10]]
 
-    problem = BarrierOptimization(objective, constraints, )
+    problem = BarrierOptimization(objective, constraints)
     problem.optimize(starting_points, alpha, beta, mu, t, eps)
 
 
@@ -77,7 +77,7 @@ def q5():
     constraints = ['10 - x', '15 - y']
     starting_points = [[20, 40], [100, 200], [53, 43]]
 
-    problem = BarrierOptimization(objective, constraints, )
+    problem = BarrierOptimization(objective, constraints)
     problem.optimize(starting_points, alpha, beta, mu, t, eps)
 
 

@@ -6,7 +6,11 @@ class BarrierOptimization:
         # Create the objective/constraint function and obtain its variables
         self.f0: sp.Function = sp.parse_expr(objective)
         self.fi = [sp.parse_expr(func) for func in constraints]
-        self.variables = sorted(self.f0.free_symbols, key=lambda var: var.name)
+
+        self.variables = set(self.f0.free_symbols)
+        for cons in self.fi:
+            self.variables.update(cons.free_symbols)
+        self.variables = sorted(list(self.variables), key=lambda var: var.name)
 
         self.num_variables = len(self.variables)
         self.m = len(constraints)
@@ -68,7 +72,7 @@ class BarrierOptimization:
 
                 print(f'Inner loop finished, took {nm_count} NM rounds')
                 print(f'x = {x}')
-                print(f'f(x) = {self.eval_fn(self.f0, x)}')
+                print(f'f(x) = {self.eval_fn(self.f0, x).evalf()}')
 
                 # Check stopping criterion
                 if self.m / t < eps:
