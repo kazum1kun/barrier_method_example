@@ -24,8 +24,8 @@ def q1():
     constraints = ['2 - x', 'x - 4']
     starting_points = [3, 3.5, 2.1]
 
-    problem = BarrierOptimization(objective, constraints, starting_points)
-    problem.optimize(alpha, beta, mu, t, eps)
+    problem = BarrierOptimization(objective, constraints)
+    problem.optimize(starting_points, alpha, beta, mu, t, eps)
 
 
 # Exercise 11.2
@@ -36,8 +36,8 @@ def q2():
     constraints = ['x1 - x2', '-x2']
     starting_points = [[1, 5], [2, 4], [3, 10]]
 
-    problem = BarrierOptimization(objective, constraints, starting_points)
-    problem.optimize(alpha, beta, mu, t, eps)
+    problem = BarrierOptimization(objective, constraints)
+    problem.optimize(starting_points, alpha, beta, mu, t, eps)
 
 
 # Question 3
@@ -50,8 +50,8 @@ def q3():
     constraints = ['5 - x + y', '100 - x', '100 - y']
     starting_points = [[120, 104], [5000, 101]]
 
-    problem = BarrierOptimization(objective, constraints, starting_points)
-    problem.optimize(alpha, beta, mu, t, eps)
+    problem = BarrierOptimization(objective, constraints)
+    problem.optimize(starting_points, alpha, beta, mu, t, eps)
 
 
 # Question 4
@@ -62,10 +62,10 @@ def q3():
 def q4():
     objective = 'x1 ** 4 - 10*x1**2 + 5*x2**2 + x3**2  + x1 + x2 - x3'
     constraints = ['x1 - 5', '3 - x2', '-x3']
-    starting_points = [[4, 4, 1], [1, 2, 3], [5, 5, 5]]
+    starting_points = [[4, 4, 1], [1, 6, 3], [4, 5, 10]]
 
-    problem = BarrierOptimization(objective, constraints, starting_points)
-    problem.optimize(alpha, beta, mu, t, eps)
+    problem = BarrierOptimization(objective, constraints, )
+    problem.optimize(starting_points, alpha, beta, mu, t, eps)
 
 
 # Question 5
@@ -77,8 +77,8 @@ def q5():
     constraints = ['10 - x', '15 - y']
     starting_points = [[20, 40], [100, 200], [53, 43]]
 
-    problem = BarrierOptimization(objective, constraints, starting_points)
-    problem.optimize(alpha, beta, mu, t, eps)
+    problem = BarrierOptimization(objective, constraints, )
+    problem.optimize(starting_points, alpha, beta, mu, t, eps)
 
 
 if __name__ == '__main__':
