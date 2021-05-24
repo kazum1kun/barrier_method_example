@@ -1,7 +1,7 @@
 from barrier_method import BarrierOptimization
 
 alpha = 0.2
-beta = 0.5
+beta = 0.9
 mu = 10
 t = 5
 eps = 0.0001
@@ -30,7 +30,7 @@ def q1():
 
 # Exercise 11.2
 # min x_2
-# s.t. x1 < x2, 0 < x2
+# s.t. x1 <= x2, 0 <= x2
 def q2():
     objective = 'x2'
     constraints = ['x1 - x2', '-x2']
@@ -43,8 +43,8 @@ def q2():
 # Question 3
 # min 20x + 5y
 # s.t. x - y >= 5
-#      x > 100
-#      y > 100
+#      x >= 100
+#      y >= 100
 def q3():
     objective = '20*x + 5*y'
     constraints = ['5 - x + y', '100 - x', '100 - y']
@@ -56,21 +56,21 @@ def q3():
 
 # Question 4
 # min x1^4 - 10x1^2  + 5x2^2 + x3^2 + x1 + x2 - x3
-# s.t. x1 < 5
-#      x2 > 3
-#      x3 > 0
+# s.t. x1 <= 5
+#      x2 >= 3
+#      x3 >= 0
 def q4():
     objective = 'x1 ** 4 - 10*x1**2 + 5*x2**2 + x3**2  + x1 + x2 - x3'
     constraints = ['x1 - 5', '3 - x2', '-x3']
-    starting_points = [[10, 4, 1], [1, 6, 3], [4, 5, 10]]
+    starting_points = [[10, 4, 1], [1, 6, 3], [4, 5, 10], [3, 2, -6]]
 
-    problem = BarrierOptimization(objective, constraints)
-    problem.optimize(starting_points, alpha, beta, mu, t, eps)
-
+    problem = BarrierOptimization(objective, constraints, True)
+    # problem.optimize(starting_points, alpha, beta, mu, t, eps)
+    problem.phase_i(starting_points)
 
 # Question 5
 # min 6 log(x) + 8 log(y)
-# s.t. x > 10, y > 15
+# s.t. x >= 10, y >= 15
 
 def q5():
     objective = '6*log(x) + 8*log(y)'

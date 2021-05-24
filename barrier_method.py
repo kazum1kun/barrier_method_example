@@ -2,10 +2,14 @@ import sympy as sp
 
 
 class BarrierOptimization:
-    def __init__(self, objective, constraints):
+    def __init__(self, objective, constraints, need_parse):
         # Create the objective/constraint function and obtain its variables
-        self.f0: sp.Function = sp.parse_expr(objective)
-        self.fi = [sp.parse_expr(func) for func in constraints]
+        if need_parse:
+            self.f0: sp.Function = sp.parse_expr(objective)
+            self.fi = [sp.parse_expr(func) for func in constraints]
+        else:
+            self.f0 = objective
+            self.fi = constraints
 
         self.variables = set(self.f0.free_symbols)
         for cons in self.fi:
@@ -81,6 +85,23 @@ class BarrierOptimization:
                 bm_round += 1
                 # Increase t
                 t = mu * t
+
+    def phase_i(self, starting_points):
+        for x in starting_points:
+            # Choose an appropriate starting s value
+            constr = sp.Matrix(self.fi)
+            s = max(self.eval_fn(constr, x)) + 0.000001
+            print(f'current value of s is {s}')
+
+            # If s < 0, the problem is already strictly feasible, and no further action are needed
+            # Otherwise, construct an an optimization problem that finds x that makes s less than zero
+            if s >= 0:
+                # New objective
+                p1_objective = sp.parse_expr('s')
+                p1_constraints = [cons - p1_objective for cons in self.fi]
+
+                p1_problem = BarrierOptimization(p1_objective, p1_constraints, False)
+                p1_problem.optimize([x], 0.2, 0.9, 10, 5, 0.1)
 
     def eval_fn(self, f, values):
         return f.subs(dict(zip(self.variables, values)))
